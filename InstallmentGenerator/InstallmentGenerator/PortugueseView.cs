@@ -153,20 +153,22 @@ namespace InstallmentGenerator
         public PortugueseView()
         {
             SetHolidayDates();
-            foreach (var item in GetDate())
+
+
+            for (int i = 0; i < InstallmentDays.Count; i++)
             {
-                foreach (var item2 in GetHolidayDates())
+                for (int j = 0; j < HolidayDates.Count; j++)
                 {
-                    while (item.Equals(item2) || item.DayOfWeek ==  DayOfWeek.Saturday|| item.DayOfWeek == DayOfWeek.Sunday)
+                    while (InstallmentDays[i].Equals(HolidayDates[j]) || (int)InstallmentDays[i].DayOfWeek == 0 || (int)InstallmentDays[i].DayOfWeek == 6)
                     {
-                        item.AddDays(1);
+                       InstallmentDays[i] = InstallmentDays[i].AddDays(1);
                     }
                 }
-                Console.WriteLine(item + " -- " + item.DayOfWeek);
-            }      
-
-        }
-
+                Console.WriteLine(InstallmentDays[i] + " -- " + InstallmentDays[i].DayOfWeek);
+            }
+        }      
 
     }
+
+
 }
