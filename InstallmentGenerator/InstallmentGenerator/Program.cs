@@ -8,6 +8,7 @@ namespace InstallmentGenerator
 {
     public abstract class CheckWorkingDays
     {
+        public string Language { get; set; }
         public DateTime DateProvided { get; set; }
 
         public string Greetings;
@@ -52,20 +53,33 @@ namespace InstallmentGenerator
                 Thread.Sleep(1500);
                 DateProvided = DateTime.Today;
 
+                SetHolidayDates();
+
                 InstallmentDays = new List<DateTime>();
 
-                InstallmentDays.Add(DateProvided.AddMonths(1));
-                InstallmentDays.Add(DateProvided.AddMonths(2));
-                InstallmentDays.Add(DateProvided.AddMonths(3));
-                InstallmentDays.Add(DateProvided.AddMonths(4));
-                InstallmentDays.Add(DateProvided.AddMonths(5));
-                InstallmentDays.Add(DateProvided.AddMonths(6));
-                InstallmentDays.Add(DateProvided.AddMonths(7));
-                InstallmentDays.Add(DateProvided.AddMonths(8));
-                InstallmentDays.Add(DateProvided.AddMonths(9));
-                InstallmentDays.Add(DateProvided.AddMonths(10));
-                InstallmentDays.Add(DateProvided.AddMonths(11));
-                InstallmentDays.Add(DateProvided.AddMonths(12));
+                if (GetLoading() == "\n  Checking...\n")
+                {
+                    Console.Write("\n  In how many installments was the purchase made? ");
+                    int NumberOfInstallments = Int32.Parse(Console.ReadLine());
+
+                    for (int i = 1; i <= NumberOfInstallments; i++)
+                    {
+                        InstallmentDays.Add(DateProvided.AddMonths(i));
+                    }
+
+                    Console.ReadLine();
+                }
+                else if (GetLoading() == "\n  Verificando...\n")
+                {
+                    Console.Write("\n  Em quantas parcelas foi feita a compra? ");
+                    int NumberOfInstallments = Int32.Parse(Console.ReadLine());
+
+                    for (int i = 1; i <= NumberOfInstallments; i++)
+                    {
+                        InstallmentDays.Add(DateProvided.AddMonths(i));
+                    }
+                    Console.ReadLine();
+                }
             }
             else
             {

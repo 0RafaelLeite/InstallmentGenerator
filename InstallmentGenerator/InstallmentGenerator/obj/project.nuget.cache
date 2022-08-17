@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "zkFTW6Va4NbtcV6zrF4SpxkgwalKDV/CziB2PqOFFLONXJEoAyjiznDr6zJz2xjBFILec0Q0JaCH4sLcJf5c8Q==",
+  "dgSpecHash": "mG7APzqocKTKEYuH+smvN7YyBUSWp3NJAcl/m8EsW1x4z8OYwQ1hGn8G522rWICR5E3AgBSVgsGoUbJMGFKPUw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\rafael.leite\\Source\\Repos\\InstallmentGenerator\\InstallmentGenerator\\InstallmentGenerator\\InstallmentGenerator.csproj",
+  "projectFilePath": "C:\\Users\\rafael.leite\\source\\repos\\InstallmentGenerator\\InstallmentGenerator\\InstallmentGenerator\\InstallmentGenerator.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

@@ -8,8 +8,6 @@ namespace InstallmentGenerator
 {
     public class EnglishView : CheckWorkingDays
     {
-        private string dayPosition;
-
         public override void SetGreetings()
         {
             Greetings = "~~~~~~~~~~~~~~~~ Installment generator ~~~~~~~~~~~~~~~~\n  Enter a purchase date to get all installment payment dates!!\n\n  First, was the purchase made today? enter [1] to YES and [2] to NO \n Response: ";
@@ -52,7 +50,14 @@ namespace InstallmentGenerator
 
                 if (teste)
                 {
-                    break;
+                    if (month > 12)
+                    {
+                        month = 0;
+                    }
+                    else
+                    {
+                        break;
+                    }
                 }
 
                 if (monthName == "JANUARY")
@@ -118,7 +123,7 @@ namespace InstallmentGenerator
             {
                 int yearProvided = Int32.Parse(Console.ReadLine());
 
-                if (yearProvided < 1583)
+                if (yearProvided < 1583 || yearProvided > 2100)
                 {
                     Console.WriteLine("  Type a valid year: ");
                 }
@@ -128,62 +133,57 @@ namespace InstallmentGenerator
                 }
             }
 
+
+            DateProvided = new DateTime(year, month, day);
+
+            InstallmentDays = new List<DateTime>();
+
+            Console.Write("\n  In how many installments was the purchase made? ");
+            int NumberOfInstallments = Int32.Parse(Console.ReadLine());
+
+            for (int i = 1; i <= NumberOfInstallments; i++)
+            {
+                InstallmentDays.Add(DateProvided.AddMonths(i));
+            }
+
+
             Console.WriteLine("\n  Checking...\n");
             Thread.Sleep(1500);
-            DateTime DateProvided = new DateTime(year, month, day);
 
+            SetHolidayDates();
 
-            var InstallmentDays = new List<DateTime>();
-
-            InstallmentDays.Add(this.DateProvided.AddMonths(1));
-            InstallmentDays.Add(this.DateProvided.AddMonths(2));
-            InstallmentDays.Add(this.DateProvided.AddMonths(3));
-            InstallmentDays.Add(this.DateProvided.AddMonths(4));
-            InstallmentDays.Add(this.DateProvided.AddMonths(5));
-            InstallmentDays.Add(this.DateProvided.AddMonths(6));
-            InstallmentDays.Add(this.DateProvided.AddMonths(7));
-            InstallmentDays.Add(this.DateProvided.AddMonths(8));
-            InstallmentDays.Add(this.DateProvided.AddMonths(9));
-            InstallmentDays.Add(this.DateProvided.AddMonths(10));
-            InstallmentDays.Add(this.DateProvided.AddMonths(11));
-            InstallmentDays.Add(this.DateProvided.AddMonths(12));
         }
 
-
-        public void SetDayPosition()
-        {
-
-            if (this.DateProvided.Day == 1 || this.DateProvided.Day == 21 || this.DateProvided.Day == 31)
-            {
-                dayPosition = "st";
-            }
-            else if (this.DateProvided.Day == 2 || this.DateProvided.Day == 22)
-            {
-                dayPosition = "nd";
-            }
-            else if (this.DateProvided.Day == 3 || this.DateProvided.Day == 23)
-            {
-                dayPosition = "rd";
-            }
-            else
-            {
-                dayPosition = "th";
-            }
-        }
-
-        public string GetDayPosition()
-        {
-            return dayPosition;
-        }
-
-       
         public EnglishView()
         {
-            SetDayPosition();
+            for (int a = 0; a < 26; a++)
+            {
+                Thread.Sleep(50);
+                Console.Write("~");
+            }
 
- 
+            Console.Write("  Installment  ");
+
+            for (int b = 0; b < 26; b++)
+            {
+                Thread.Sleep(50);
+                Console.Write("~");
+            }
+
+            Console.WriteLine("\n");
+
+            for (int i = 0; i < InstallmentDays.Count; i++)
+            {
+                for (int j = 0; j < HolidayDates.Count; j++)
+                {
+                    while (InstallmentDays[i].Equals(HolidayDates[j]) || (int)InstallmentDays[i].DayOfWeek == 0 || (int)InstallmentDays[i].DayOfWeek == 6)
+                    {
+                        InstallmentDays[i] = InstallmentDays[i].AddDays(1);
+                    }
+                }
+                Thread.Sleep(400);
+                Console.WriteLine("\n  " + InstallmentDays[i] + " -- " + InstallmentDays[i].DayOfWeek);
+            }
         }
-
     }
-
 }

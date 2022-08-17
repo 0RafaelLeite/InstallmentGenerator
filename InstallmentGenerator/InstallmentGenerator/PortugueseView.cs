@@ -49,7 +49,14 @@ namespace InstallmentGenerator
 
                 if (teste)
                 {
-                    break;
+                    if (month > 12)
+                    {
+                        month = 0;
+                    }
+                    else
+                    {
+                        break;
+                    }
                 }
 
                 if (monthName == "JANEIRO")
@@ -115,7 +122,7 @@ namespace InstallmentGenerator
             {
                 int yearProvided = Int32.Parse(Console.ReadLine());
 
-                if (yearProvided < 1583)
+                if (yearProvided < 1583 || yearProvided > 2100)
                 {
                     Console.WriteLine("  Digite um ano válido: ");
                 }
@@ -125,35 +132,43 @@ namespace InstallmentGenerator
                 }
             }
 
-            Console.WriteLine("\n  Verificando...\n");
-            Thread.Sleep(1500);
-
             DateProvided = new DateTime(year, month, day);
-
-            SetHolidayDates();
 
             InstallmentDays = new List<DateTime>();
 
-            InstallmentDays.Add(DateProvided.AddMonths(1));
-            InstallmentDays.Add(DateProvided.AddMonths(2));
-            InstallmentDays.Add(DateProvided.AddMonths(3));
-            InstallmentDays.Add(DateProvided.AddMonths(4));
-            InstallmentDays.Add(DateProvided.AddMonths(5));
-            InstallmentDays.Add(DateProvided.AddMonths(6));
-            InstallmentDays.Add(DateProvided.AddMonths(7));
-            InstallmentDays.Add(DateProvided.AddMonths(8));
-            InstallmentDays.Add(DateProvided.AddMonths(9));
-            InstallmentDays.Add(DateProvided.AddMonths(10));
-            InstallmentDays.Add(DateProvided.AddMonths(11));
-            InstallmentDays.Add(DateProvided.AddMonths(12));
+            Console.Write("\n  Em quantas parcelas foi feita a compra? ");
+            int NumberOfInstallments = Int32.Parse(Console.ReadLine());
 
+            for (int i = 1; i <= NumberOfInstallments; i++)
+            {
+                InstallmentDays.Add(DateProvided.AddMonths(i));
+            }
+
+            Console.WriteLine("\n  Verificando...\n");
+            Thread.Sleep(1500);
+
+
+            SetHolidayDates();
         }
 
 
         public PortugueseView()
         {
-            SetHolidayDates();
+            for (int a = 0; a < 26; a++)
+            {
+                Thread.Sleep(50);
+                Console.Write("~");
+            }
 
+            Console.Write("  Parcelas  ");
+
+            for (int b = 0; b < 26; b++)
+            {
+                Thread.Sleep(50);
+                Console.Write("~");
+            }
+
+            Console.WriteLine("\n");
 
             for (int i = 0; i < InstallmentDays.Count; i++)
             {
@@ -164,7 +179,8 @@ namespace InstallmentGenerator
                        InstallmentDays[i] = InstallmentDays[i].AddDays(1);
                     }
                 }
-                Console.WriteLine(InstallmentDays[i] + " -- " + InstallmentDays[i].DayOfWeek);
+                Thread.Sleep(400);
+                Console.WriteLine("\n  " + InstallmentDays[i] + " -- " + InstallmentDays[i].DayOfWeek);
             }
         }      
 
